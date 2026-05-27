@@ -480,11 +480,9 @@ body {
   </div>
 
   <div class="hero-content">
-    <!-- Qingque icon placeholder - Jun replace this src -->
     <img class="qingque-icon"
-         src="https://static.wikia.nocookie.net/honkai-star-rail/images/1/17/Qingque_Icon.png"
-         alt="青雀"
-         onerror="this.style.display='none'">
+         src="decrypted/conv2/xiuxiu.png"
+         alt="秀秀">
 
     <h1>秀秀 生日快乐!</h1>
     <p class="subtitle">青雀保佑，把把自摸，天天开心 ✨</p>
@@ -498,11 +496,18 @@ body {
   <a href="#memories" class="scroll-hint"><span>⌄</span></a>
 </section>
 
-<!-- ===== MEMORY LANE ===== -->
+<!-- ===== MEMORY LANE (Images only) ===== -->
 <section class="memory-lane tile-pattern" id="memories">
   <h2 class="section-title">回忆长廊</h2>
   <div class="section-divider"></div>
   <div class="gallery" id="gallery"></div>
+</section>
+
+<!-- ===== VIDEO WALL ===== -->
+<section class="memory-lane tile-pattern" id="videos">
+  <h2 class="section-title">精彩瞬间</h2>
+  <div class="section-divider"></div>
+  <div class="gallery" id="videoGallery"></div>
 </section>
 
 <!-- ===== BLESSING RIVER ===== -->
@@ -541,57 +546,58 @@ body {
 </div>
 
 <script>
-/* ===== DATA: Media items ===== */
-const mediaItems = [
-  // Conv1 images
-  ...Array.from({length:17}, (_,i) => ({
-    type: 'image',
-    src: `decrypted/conv1/${[
-      '17e6a3c5894efa2eef2892fa9284a469','1a0c9463ed1977e0f7e1df27870e9215',
-      '1ceff600024b59449862251662d8e5a2','28fd59c103924eef0b12e8c6c6eda990',
-      '307e12ca24a758ac1199963d01c29de5','44a7e55b61b6b6e97ad07a2c776aece1',
-      '734d7fa2a87def85faf421cfedade9d3','79a5a1c6acc7fc0b4d9195c47e1ee354',
-      '87c260dd1656dbd962978813b81a2308','8984244f9736cf8083bfd575029544bd',
-      '8d5eb48cf17b187ffef4a5b0b0807c80','8f5fec77b566e5914eacf3062118e706',
-      '9c0c9148875c78299bd8dff8d1be22a8','a3364881d00418957b791b6a7c9d0679',
-      'd9a3564b441e49c1dd759f9a4423972d','ea8e1178e7da527dd983182f99a3228e',
-      'ef63f88c55de41ee91645b0425ae7195'
-    ][i]}.png`,
-    thumb: 'image'
-  })),
-  // Conv2 images
-  ...Array.from({length:8}, (_,i) => ({
-    type: 'image',
-    src: `decrypted/conv2/${[
-      '15aaf3af9a6823a2f3e4b9d219136c17','47b637c5b3dc41e1eac68423fdb8edc1',
-      '62d7876e9c0f1be9910f9020bd2dc50c','8911035e982f778d167a5339d41a0ccd',
-      'c3a8776ae963c9e2c6cda4ecbbb603c3','f803df5408d89e3b467c2c3fa65be351',
-      'fa3f059f3443c2fb28f7e30d66692af9','fb5123b6aae33b289b96b69406c9206b'
-    ][i]}.png`,
-    thumb: 'image'
-  })),
-  // GIF
-  { type: 'image', src: 'decrypted/206226ce0ee1ff6a8a4253d631c24acd_t.gif', thumb: 'gif' },
-  // Videos
-  { type: 'video', src: 'videos/3eb64b794631d72abd06e1dbda97b8ab.mp4', thumb: '视频1' },
-  { type: 'video', src: 'videos/514ae3c93bdfb465ca8005d0cd6dc623.mp4', thumb: '视频2' },
+/* ===== DATA: Images (Memory Lane) ===== */
+const imageFiles = {
+  conv1: [
+    '17e6a3c5894efa2eef2892fa9284a469','1a0c9463ed1977e0f7e1df27870e9215',
+    '28fd59c103924eef0b12e8c6c6eda990','307e12ca24a758ac1199963d01c29de5',
+    '44a7e55b61b6b6e97ad07a2c776aece1','734d7fa2a87def85faf421cfedade9d3',
+    '79a5a1c6acc7fc0b4d9195c47e1ee354','8d5eb48cf17b187ffef4a5b0b0807c80',
+    '8f5fec77b566e5914eacf3062118e706','9c0c9148875c78299bd8dff8d1be22a8',
+    'a3364881d00418957b791b6a7c9d0679','d9a3564b441e49c1dd759f9a4423972d',
+    'ea8e1178e7da527dd983182f99a3228e','ef63f88c55de41ee91645b0425ae7195'
+  ],
+  conv2: [
+    '15aaf3af9a6823a2f3e4b9d219136c17','47b637c5b3dc41e1eac68423fdb8edc1',
+    '8911035e982f778d167a5339d41a0ccd','fa3f059f3443c2fb28f7e30d66692af9',
+    'fb5123b6aae33b289b96b69406c9206b'
+  ]
+};
+
+const videoFiles = [
+  'videos/3eb64b794631d72abd06e1dbda97b8ab.mp4',
+  'videos/514ae3c93bdfb465ca8005d0cd6dc623.mp4',
+  'videos/WeChat_20260527211225.mp4',
+  'videos/WeChat_20260527211235.mp4'
 ];
 
 /* ===== Gallery Builder ===== */
-const gallery = document.getElementById('gallery');
-mediaItems.forEach((item, idx) => {
-  const el = document.createElement('div');
-  el.className = 'gallery-item';
-  el.style.transitionDelay = `${idx * 0.05}s`;
-  el.onclick = () => openLightbox(item);
+function buildGallery(containerId, items) {
+  const container = document.getElementById(containerId);
+  items.forEach((item, idx) => {
+    const el = document.createElement('div');
+    el.className = 'gallery-item';
+    el.style.transitionDelay = `${idx * 0.05}s`;
+    el.onclick = () => openLightbox(item);
+    if (item.type === 'video') {
+      el.innerHTML = `<video src="${item.src}" preload="metadata"></video><div class="play-icon">▶️</div>`;
+    } else {
+      el.innerHTML = `<img src="${item.src}" alt="回忆${idx+1}" loading="lazy" onerror="this.parentElement.style.display='none'">`;
+    }
+    container.appendChild(el);
+  });
+}
 
-  if (item.type === 'video') {
-    el.innerHTML = `<video src="${item.src}" preload="metadata"></video><div class="play-icon">▶️</div>`;
-  } else {
-    el.innerHTML = `<img src="${item.src}" alt="回忆${idx+1}" loading="lazy" onerror="this.parentElement.style.display='none'">`;
-  }
-  gallery.appendChild(el);
-});
+// Build image gallery
+const imgItems = [
+  ...imageFiles.conv1.map(f => ({ type:'image', src:`decrypted/conv1/${f}.png` })),
+  ...imageFiles.conv2.map(f => ({ type:'image', src:`decrypted/conv2/${f}.png` }))
+];
+buildGallery('gallery', imgItems);
+
+// Build video gallery
+const vidItems = videoFiles.map(f => ({ type:'video', src: f }));
+buildGallery('videoGallery', vidItems);
 
 /* ===== Scroll Reveal ===== */
 const observer = new IntersectionObserver((entries) => {
@@ -600,7 +606,10 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-document.querySelectorAll('.gallery-item').forEach(el => observer.observe(el));
+// Observe after all galleries built
+setTimeout(() => {
+  document.querySelectorAll('.gallery-item').forEach(el => observer.observe(el));
+}, 100);
 
 /* ===== Lightbox ===== */
 function openLightbox(item) {
