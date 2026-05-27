@@ -338,6 +338,102 @@ body {
   padding: 5rem 2rem;
   text-align: center;
 }
+.game-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+/* Qingque side images — replace src with real Qingque art */
+.qq-side {
+  width: 140px;
+  height: 280px;
+  border-radius: 16px;
+  border: 3px solid rgba(65,184,131,0.4);
+  background: linear-gradient(145deg, #1a3a2a, #0d1f17);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  flex-shrink: 0;
+  transition: all 0.4s;
+  box-shadow: 0 0 20px rgba(65,184,131,0.15);
+  /* Replace with: <img src="qingque_left.png" style="width:100%;height:100%;object-fit:cover;border-radius:13px;"> */
+}
+.qq-side:hover {
+  border-color: var(--jade);
+  box-shadow: 0 0 35px rgba(65,184,131,0.35);
+}
+.qq-side img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 13px;
+}
+/* Victory celebration overlay */
+.victory-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(10,10,26,0.9);
+  z-index: 1001;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.5s ease;
+}
+.victory-overlay.show { display: flex; }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.victory-overlay .victory-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 24px;
+  border: 4px solid var(--gold);
+  background: linear-gradient(145deg, #2d5a3a, #1a3a2a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 6rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0 60px rgba(212,168,83,0.4);
+  animation: victoryPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  /* Replace with: <img src="qingque_win.png" style="width:100%;height:100%;object-fit:cover;border-radius:20px;"> */
+}
+@keyframes victoryPop {
+  0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+.victory-overlay .victory-text {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--gold);
+  text-align: center;
+  animation: victoryPop 0.6s 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) both;
+}
+.victory-overlay .victory-close {
+  margin-top: 2rem;
+  padding: 0.7rem 2rem;
+  background: var(--jade);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+.victory-overlay .victory-close:hover {
+  box-shadow: 0 0 25px rgba(65,184,131,0.5);
+}
+@media (max-width: 640px) {
+  .qq-side { width: 80px; height: 200px; font-size: 2.5rem; }
+  .victory-overlay .victory-img { width: 140px; height: 140px; font-size: 4rem; }
+}
 .mahjong-board {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -512,7 +608,7 @@ body {
 
 <!-- ===== BLESSING RIVER ===== -->
 <section class="blessing-river tile-pattern" id="blessings">
-  <h2 class="section-title">百业祝福</h2>
+  <h2 class="section-title">蒲公英公社的祝福</h2>
   <div class="section-divider"></div>
   <div id="blessing-container"></div>
 </section>
@@ -522,10 +618,26 @@ body {
   <h2 class="section-title">青雀摸牌</h2>
   <div class="section-divider"></div>
   <p style="color:var(--cream);opacity:0.7;margin-bottom:1rem;">翻开麻将牌，找到相同的青雀牌吧！🀄</p>
-  <div class="game-score">配对: <span id="matchCount">0</span> / 8</div>
-  <div class="mahjong-board" id="mahjongBoard"></div>
-  <div class="game-message" id="gameMessage"></div>
-  <button class="game-btn" onclick="restartGame()">重新摸牌 🔄</button>
+  <div class="game-area">
+    <!-- 左侧青雀 — 替换 src 为青雀立绘图片 -->
+    <div class="qq-side" id="qqLeft">🀄</div>
+    <div style="flex:1;min-width:0;">
+      <div class="game-score">配对: <span id="matchCount">0</span> / 8</div>
+      <div class="mahjong-board" id="mahjongBoard"></div>
+      <div class="game-message" id="gameMessage"></div>
+      <button class="game-btn" onclick="restartGame()">重新摸牌 🔄</button>
+    </div>
+    <!-- 右侧青雀 — 替换 src 为青雀立绘图片 -->
+    <div class="qq-side" id="qqRight">🀆</div>
+  </div>
+
+  <!-- 胜利庆祝弹窗 -->
+  <div class="victory-overlay" id="victoryOverlay">
+    <!-- 替换为: <img src="qingque_win.png" class="victory-img" alt="青雀庆祝"> -->
+    <div class="victory-img">🎉</div>
+    <div class="victory-text">天胡！秀秀的运气真好！<br>生日快乐！🎂</div>
+    <button class="victory-close" onclick="closeVictory()">谢谢大家 ❤️</button>
+  </div>
 </section>
 
 <!-- ===== FOOTER ===== -->
@@ -535,8 +647,8 @@ body {
   <p style="color:var(--cream);opacity:0.8;max-width:500px;margin:1rem auto;">
     愿青雀的运气一直伴你左右<br>把把天胡，天天开心！
   </p>
-  <p class="signature">—— 百业全体成员 敬上</p>
-  <div class="hashtag">#秀秀生日快乐 #百业Forever</div>
+  <p class="signature">—— 蒲公英公社全体成员 敬上</p>
+  <div class="hashtag">#秀秀生日快乐 #蒲公英公社Forever</div>
 </section>
 
 <!-- ===== LIGHTBOX ===== -->
@@ -634,15 +746,15 @@ const blessings = [
   { name:'小月', initial:'月', msg:'秀秀生日快乐！青雀附体，把把天胡！🀄' },
   { name:'大海', initial:'海', msg:'生日快乐秀秀！新的一年继续carry我们！💪' },
   { name:'叶子', initial:'叶', msg:'秀秀永远18岁！天天开心，抽卡不歪！🌸' },
-  { name:'阿强', initial:'强', msg:'生日快乐！百业因你而精彩！🎉' },
+  { name:'阿强', initial:'强', msg:'生日快乐！蒲公英公社因你而精彩！🎉' },
   { name:'晓雨', initial:'雨', msg:'秀秀~生日快乐！愿你的每一天都闪闪发光✨' },
   { name:'小熊', initial:'熊', msg:'Happy Birthday秀秀！青雀大王保佑你！🎂' },
   { name:'老王', initial:'王', msg:'生日快乐！祝你崩铁全角色满命！' },
-  { name:'小花', initial:'花', msg:'秀秀生快！你是百业最亮的星！🌟' },
+  { name:'小花', initial:'花', msg:'秀秀生快！你是蒲公英公社最亮的星！🌟' },
   { name:'阿杰', initial:'杰', msg:'生日快乐秀秀！期待下次一起开黑！🎮' },
   { name:'小七', initial:'七', msg:'秀秀生日快乐！青雀の祝福与你同在~' },
   { name:'大白', initial:'白', msg:'秀秀生日快乐！记得天天快乐呀！' },
-  { name:'梦梦', initial:'梦', msg:'生日快乐！百业 forever，秀秀 best！' },
+  { name:'梦梦', initial:'梦', msg:'生日快乐！蒲公英公社 forever，秀秀 best！' },
 ];
 
 // Duplicate blessings for seamless loop
@@ -718,6 +830,9 @@ function flipTile(i) {
       if (matched.length === tiles.length) {
         document.getElementById('gameMessage').textContent = '🎉 天胡！秀秀的运气真好！生日快乐！🎂';
         spawnCelebration();
+        setTimeout(() => {
+          document.getElementById('victoryOverlay').classList.add('show');
+        }, 500);
       } else {
         document.getElementById('gameMessage').textContent = ['自摸！🀄','碰！','吃！','杠！'][Math.floor(Math.random()*4)];
       }
@@ -732,6 +847,7 @@ function flipTile(i) {
 }
 
 function restartGame() {
+  document.getElementById('victoryOverlay').classList.remove('show');
   initGame();
 }
 
@@ -765,6 +881,10 @@ function spawnCelebration() {
       setTimeout(() => p.remove(), 3000);
     }, i * 100);
   }
+}
+
+function closeVictory() {
+  document.getElementById('victoryOverlay').classList.remove('show');
 }
 
 /* ===== Init ===== */
