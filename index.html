@@ -346,31 +346,28 @@ body {
   max-width: 800px;
   margin: 0 auto;
 }
-/* Qingque side images — replace src with real Qingque art */
+/* Qingque side images */
 .qq-side {
-  width: 140px;
-  height: 280px;
+  width: 150px;
+  height: 380px;
   border-radius: 16px;
   border: 3px solid rgba(65,184,131,0.4);
-  background: linear-gradient(145deg, #1a3a2a, #0d1f17);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 4rem;
   flex-shrink: 0;
+  overflow: hidden;
   transition: all 0.4s;
-  box-shadow: 0 0 20px rgba(65,184,131,0.15);
-  /* Replace with: <img src="qingque_left.png" style="width:100%;height:100%;object-fit:cover;border-radius:13px;"> */
+  box-shadow: 0 0 25px rgba(65,184,131,0.2);
+  background: linear-gradient(145deg, #1a3a2a, #0d1f17);
 }
 .qq-side:hover {
   border-color: var(--jade);
-  box-shadow: 0 0 35px rgba(65,184,131,0.35);
+  box-shadow: 0 0 40px rgba(65,184,131,0.45);
+  transform: translateY(-4px);
 }
 .qq-side img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  border-radius: 13px;
+  object-fit: contain;
+  display: block;
 }
 /* Victory celebration overlay */
 .victory-overlay {
@@ -390,19 +387,14 @@ body {
   to { opacity: 1; }
 }
 .victory-overlay .victory-img {
-  width: 200px;
-  height: 200px;
-  border-radius: 24px;
+  max-width: 420px;
+  width: 80%;
+  border-radius: 20px;
   border: 4px solid var(--gold);
-  background: linear-gradient(145deg, #2d5a3a, #1a3a2a);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 6rem;
   margin-bottom: 1.5rem;
   box-shadow: 0 0 60px rgba(212,168,83,0.4);
   animation: victoryPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  /* Replace with: <img src="qingque_win.png" style="width:100%;height:100%;object-fit:cover;border-radius:20px;"> */
+  display: block;
 }
 @keyframes victoryPop {
   0% { transform: scale(0) rotate(-10deg); opacity: 0; }
@@ -431,8 +423,9 @@ body {
   box-shadow: 0 0 25px rgba(65,184,131,0.5);
 }
 @media (max-width: 640px) {
-  .qq-side { width: 80px; height: 200px; font-size: 2.5rem; }
-  .victory-overlay .victory-img { width: 140px; height: 140px; font-size: 4rem; }
+  .game-area { gap: 0.6rem; }
+  .qq-side { width: 70px; height: 200px; }
+  .victory-overlay .victory-img { max-width: 280px; }
 }
 .mahjong-board {
   display: grid;
@@ -619,22 +612,19 @@ body {
   <div class="section-divider"></div>
   <p style="color:var(--cream);opacity:0.7;margin-bottom:1rem;">翻开麻将牌，找到相同的青雀牌吧！🀄</p>
   <div class="game-area">
-    <!-- 左侧青雀 — 替换 src 为青雀立绘图片 -->
-    <div class="qq-side" id="qqLeft">🀄</div>
+    <div class="qq-side" id="qqLeft"><img src="decrypted/left.jpg" alt="青雀"></div>
     <div style="flex:1;min-width:0;">
       <div class="game-score">配对: <span id="matchCount">0</span> / 8</div>
       <div class="mahjong-board" id="mahjongBoard"></div>
       <div class="game-message" id="gameMessage"></div>
       <button class="game-btn" onclick="restartGame()">重新摸牌 🔄</button>
     </div>
-    <!-- 右侧青雀 — 替换 src 为青雀立绘图片 -->
-    <div class="qq-side" id="qqRight">🀆</div>
+    <div class="qq-side" id="qqRight"><img src="decrypted/right.jpg" alt="青雀"></div>
   </div>
 
   <!-- 胜利庆祝弹窗 -->
   <div class="victory-overlay" id="victoryOverlay">
-    <!-- 替换为: <img src="qingque_win.png" class="victory-img" alt="青雀庆祝"> -->
-    <div class="victory-img">🎉</div>
+    <img src="decrypted/winner.jpg" class="victory-img" alt="青雀庆祝">
     <div class="victory-text">天胡！秀秀的运气真好！<br>生日快乐！🎂</div>
     <button class="victory-close" onclick="closeVictory()">谢谢大家 ❤️</button>
   </div>
