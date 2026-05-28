@@ -733,18 +733,23 @@ function closeLightbox() {
 
 /* ===== Blessing River ===== */
 const blessings = [
-  { name:'小月', initial:'月', msg:'秀秀生日快乐！青雀附体，把把天胡！🀄' },
-  { name:'大海', initial:'海', msg:'生日快乐秀秀！新的一年继续carry我们！💪' },
-  { name:'叶子', initial:'叶', msg:'秀秀永远18岁！天天开心，抽卡不歪！🌸' },
-  { name:'阿强', initial:'强', msg:'生日快乐！蒲公英公社因你而精彩！🎉' },
-  { name:'晓雨', initial:'雨', msg:'秀秀~生日快乐！愿你的每一天都闪闪发光✨' },
-  { name:'小熊', initial:'熊', msg:'Happy Birthday秀秀！青雀大王保佑你！🎂' },
-  { name:'老王', initial:'王', msg:'生日快乐！祝你崩铁全角色满命！' },
-  { name:'小花', initial:'花', msg:'秀秀生快！你是蒲公英公社最亮的星！🌟' },
-  { name:'阿杰', initial:'杰', msg:'生日快乐秀秀！期待下次一起开黑！🎮' },
-  { name:'小七', initial:'七', msg:'秀秀生日快乐！青雀の祝福与你同在~' },
-  { name:'大白', initial:'白', msg:'秀秀生日快乐！记得天天快乐呀！' },
-  { name:'梦梦', initial:'梦', msg:'生日快乐！蒲公英公社 forever，秀秀 best！' },
+  { name:'酸奶', initial:'酸', msg:'祝秀秀永远不死' },
+  { name:'小七', initial:'七', msg:'身体健康，万事顺意' },
+  { name:'小猫', initial:'猫', msg:'祝秀秀年年有萝莉 岁岁有御姐 朝朝暮暮有机车！' },
+  { name:'小情', initial:'情', msg:'祝秀秀洪福与天齐，挣钱不费力，烦恼都抛弃，万事皆如意！' },
+  { name:'九九', initial:'九', msg:'生日快乐🎂' },
+  { name:'小五', initial:'五', msg:'秀秀姐生日快乐，驰骋江湖也驰骋前路' },
+  { name:'桂桂姐', initial:'桂', msg:'秀儿 生日快乐！天天十连双金！' },
+  { name:'星眠舟', initial:'星', msg:'祝秀秀生日快乐，新的一岁有钱有闲，天天开心' },
+  { name:'若雪', initial:'若', msg:'祝小憨憨秀秀生日快乐，越长越帅，越来越有钱' },
+  { name:'小疯子', initial:'疯', msg:'祝秀秀姐 腰好肾好身体更好 夜夜做新郎，夜夜不重样。' },
+  { name:'笔日', initial:'笔', msg:'生日快乐！废话不多说，下次见面火锅你请客，蛋糕我吃双份。' },
+  { name:'方哥', initial:'方', msg:'我的秀，方哥在这里祝你生日快乐，事事顺心，秒伤天天拿榜一！' },
+  { name:'清风', initial:'风', msg:'祝秀秀生日快乐，早日买上心爱的机车' },
+  { name:'瑶瑶', initial:'瑶', msg:'秀秀生日快乐，未来每一天，天天八音窍，调律全推荐，打本都第一。' },
+  { name:'唧唧', initial:'唧', msg:'秀秀，生日快乐，长生不死年年有今日岁岁有今朝，天天抽卡中头奖' },
+  { name:'明月', initial:'明', msg:'祝秀秀生日快乐，新的一岁，平安喜乐，得偿所愿。' },
+  { name:'长阳', initial:'长', msg:'祝秀秀生日快乐~' },
 ];
 
 // Duplicate blessings for seamless loop
@@ -765,9 +770,9 @@ function createBlessingTrack(items, speed) {
 
 const blessingContainer = document.getElementById('blessing-container');
 // 3 rows with different speeds and shuffled orders
-blessingContainer.appendChild(createBlessingTrack(allBlessings, 35));
-blessingContainer.appendChild(createBlessingTrack([...allBlessings].reverse(), 42));
-blessingContainer.appendChild(createBlessingTrack(allBlessings.sort(() => Math.random()-0.5), 28));
+blessingContainer.appendChild(createBlessingTrack(allBlessings, 80));
+blessingContainer.appendChild(createBlessingTrack([...allBlessings].reverse(), 100));
+blessingContainer.appendChild(createBlessingTrack(allBlessings.sort(() => Math.random()-0.5), 70));
 
 /* ===== Qingque Mahjong Game ===== */
 const tileEmojis = ['🀇','🀈','🀉','🀊','🀋','🀌','🀍','🀄'];
